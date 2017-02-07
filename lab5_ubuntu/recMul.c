@@ -1,17 +1,17 @@
 /*
 Name        :   Prasanna Natarajan
 Roll Number :   1410110298
-Inputs      :   Two 2x2 matrices (a,b): User inputs
-Outputs     :   Output matrix (c), which contains the product of a and b.
-Method      :   Strassen's Multiplication
+Inputs      :   Two 128x128 matrices (a,b): random integers from 0 to 9
+Outputs     :   Time taken to multiply two 128x128 matrix via strassen's multiplication is printed.
+Method      :   Normal Recursion
 */
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#define N 128   
+#define N 128   // Change the value of N to check for a different size of matrix
 
-
+// Function defenitions
 int ** operate(int** a, int a_rs,int a_cs,int** b, int b_rs, int b_cs, int size, int operator);
 void display(int **a, int size);
 int ** iniMatrix(int size);
@@ -27,8 +27,8 @@ int main(){
 	int i,j;
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
-			a[i][j] = 6;
-			b[i][j] = 2;
+			a[i][j] = rand()%10;
+			b[i][j] = rand()%10;
 		}
 	}
 	//display(a,N);
@@ -45,6 +45,7 @@ int main(){
 	return 0;
 
 }
+// initialize matrix with of size sizeXsize and returns the matrix
 int ** iniMatrix(int size){
 	int **a;
 	a=(int**)malloc(sizeof(int*)*size);
@@ -54,7 +55,7 @@ int ** iniMatrix(int size){
 	}
 	return a;
 }
-
+// prints the matrix a of size sizeXsize
 void display(int **a, int size){
 
 	int i,j;
@@ -67,8 +68,9 @@ void display(int **a, int size){
 	printf("\n");
 
 }
-
-
+// returns addition or subtraction of matrix a and b 
+// if operate == 1 then addition is performed
+// else subtraction is performed 
 int ** operate(int** a, int a_rs,int a_cs,int** b, int b_rs, int b_cs, int size, int operator){
 
 	//operator == 1 for addition and 0 for substraction
@@ -90,12 +92,11 @@ int ** operate(int** a, int a_rs,int a_cs,int** b, int b_rs, int b_cs, int size,
 	}
 	return res;
 }
-
+// multiplies matrix a and b using recursive multiplication of matrices and then return the result
 int ** multiply(int **a, int a_rs, int a_cs, int **b, int b_rs, int b_cs,int size){
 
 	if(size==2){
-		//puts("inside here");
-		// Multiply twocrosstwo matrices
+		// Multiply twoXtwo matrices
 		int p,q,r,s,t,u,v;
 		int **c = iniMatrix(2);
 		p= (a[0][0] + a[1][1])*(b[0][0]+b[1][1]);
@@ -113,7 +114,7 @@ int ** multiply(int **a, int a_rs, int a_cs, int **b, int b_rs, int b_cs,int siz
 
   		return c;
 	}
-
+	// Four quadrants
 	int **Q1 = iniMatrix(size/2);
 	int **Q2 = iniMatrix(size/2);
 	int **Q3 = iniMatrix(size/2);
@@ -124,7 +125,7 @@ int ** multiply(int **a, int a_rs, int a_cs, int **b, int b_rs, int b_cs,int siz
 	Q3 = operate(multiply(a,((a_rs+size+a_rs)/2),a_cs,b,b_rs,b_cs,size/2),0,0,multiply(a,((a_rs+size+a_rs)/2),((a_cs+size+a_cs)/2),b,((b_rs+size+b_rs)/2),b_cs,size/2),0,0,size/2,1);	
 	Q4 = operate(multiply(a,((a_rs+size+a_rs)/2),a_cs,b,b_rs,((b_cs+size+b_cs)/2),size/2),0,0,multiply(a,((a_rs+size+a_rs)/2),((a_cs+size+a_cs)/2),b,((b_rs+size+b_rs)/2),((b_cs+size+b_cs)/2),size/2),0,0,size/2,1);
 	int **result = iniMatrix(size);
-
+	// Combining the result
 	int m1_i,m1_j,i,j;
 	for (m1_i=0, i=0 ; m1_i<(size/2) ; m1_i++, i++)
         for (m1_j=0, j=0 ; m1_j<(size/2) ; m1_j++, j++){
