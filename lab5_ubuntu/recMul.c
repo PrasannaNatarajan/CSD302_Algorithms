@@ -2,7 +2,7 @@
 Name        :   Prasanna Natarajan
 Roll Number :   1410110298
 Inputs      :   Two 128x128 matrices (a,b): random integers from 0 to 9
-Outputs     :   Time taken to multiply two 128x128 matrix via strassen's multiplication is printed.
+Outputs     :   Time taken to multiply two 128x128 matrix via normal multiplication is printed.
 Method      :   Normal Recursion
 */
 
