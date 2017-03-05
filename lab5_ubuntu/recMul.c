@@ -31,10 +31,7 @@ int main(){
 			b[i][j] = rand()%10;
 		}
 	}
-	//display(a,N);
-	//display(b,N);
-	//display(operate(a,0,0,b,0,0,N,1),N);
-	//display(multiply(a,0,0,b,0,0,N),N);
+	
 	clock_t begin1 = clock();
 	multiply(a,0,0,b,0,0,N);
 	clock_t end1 = clock();
@@ -82,9 +79,7 @@ int ** operate(int** a, int a_rs,int a_cs,int** b, int b_rs, int b_cs, int size,
 	for(a_i = a_rs,b_i = b_rs,i=0;a_i<(a_rs+size);i++,a_i++,b_i++){
 		for(a_j = a_cs,b_j = b_cs,j=0; a_j<(a_cs+size);j++,a_j++,b_j++){
 			if(operator == 1){
-				//printf("i=%d,a_i = %d, b_i = %d\n",i,a_i,b_i);fflush(stdout);
 				res[i][j] = a[a_i][a_j] + b[b_i][b_j];
-				//printf("res[%d][%d] = %d",i,j,res[i][j]);fflush(stdout);
 			}else{
 				res[i][j] = a[a_i][a_j] - b[b_i][b_j];
 			}
@@ -128,30 +123,28 @@ int ** multiply(int **a, int a_rs, int a_cs, int **b, int b_rs, int b_cs,int siz
 	// Combining the result
 	int m1_i,m1_j,i,j;
 	for (m1_i=0, i=0 ; m1_i<(size/2) ; m1_i++, i++)
-        for (m1_j=0, j=0 ; m1_j<(size/2) ; m1_j++, j++){
-            result[i][j] = Q1[m1_i][m1_j];
-            //printf(" %d ", result[i][j]);fflush(stdout);
-        }
-    //printf("\n");
+        	for (m1_j=0, j=0 ; m1_j<(size/2) ; m1_j++, j++)
+            		result[i][j] = Q1[m1_i][m1_j];
+        
+   
 
-    for (m1_i=0, i=0 ; m1_i<(size/2) ; m1_i++, i++)
-        for (m1_j=0, j=(size/2) ; m1_j<(size/2) ; m1_j++, j++){
-            result[i][j] = Q2[m1_i][m1_j];
-        }
+	for (m1_i=0, i=0 ; m1_i<(size/2) ; m1_i++, i++)
+		for (m1_j=0, j=(size/2) ; m1_j<(size/2) ; m1_j++, j++)
+		    result[i][j] = Q2[m1_i][m1_j];
+        
         
 
-    for (m1_i=0, i=(size/2) ; m1_i<(size/2) ; m1_i++, i++)
-        for (m1_j=0, j=0 ; m1_j<(size/2) ; m1_j++, j++){
-            result[i][j] = Q3[m1_i][m1_j];      
-        }
+	for (m1_i=0, i=(size/2) ; m1_i<(size/2) ; m1_i++, i++)
+		for (m1_j=0, j=0 ; m1_j<(size/2) ; m1_j++, j++)
+		    result[i][j] = Q3[m1_i][m1_j];      
 
 
-    for (m1_i=0, i=(size/2) ; m1_i<(size/2) ; m1_i++, i++)
-        for (m1_j=0, j=(size/2) ; m1_j<(size/2) ; m1_j++, j++){
-            result[i][j] = Q4[m1_i][m1_j];
-        }
+	for (m1_i=0, i=(size/2) ; m1_i<(size/2) ; m1_i++, i++)
+		for (m1_j=0, j=(size/2) ; m1_j<(size/2) ; m1_j++, j++)
+		    result[i][j] = Q4[m1_i][m1_j];
+        
 
-    free(Q1);free(Q2);free(Q3);free(Q4);	
+    	free(Q1);free(Q2);free(Q3);free(Q4);	
 
     return result;
 }
