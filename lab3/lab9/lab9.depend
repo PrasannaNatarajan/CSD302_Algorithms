@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1488369535 source:c:\users\prasanna\documents\studies\semester 6\algorithms\labs\lab3\lab9\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

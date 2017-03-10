@@ -18,14 +18,15 @@ int main()
 
 void heapify(int arr[], int n, int i)
 {
-    int largest = i;
+    int largest;
     int l = 2*i + 1;
     int r = 2*i + 2;
 
 
-    if (l < n && arr[l] > arr[largest])
+    if (l < n && arr[l] > arr[i])
         largest = l;
-
+    else
+        largest = i;
 
     if (r < n && arr[r] > arr[largest])
         largest = r;
@@ -35,6 +36,7 @@ void heapify(int arr[], int n, int i)
         int temp = arr[i];
         arr[i] = arr[largest];
         arr[largest] = temp;
+        //printf("%d %d\n",largest,i);
         heapify(arr, n, largest);
     }
 }
@@ -43,16 +45,20 @@ void heapify(int arr[], int n, int i)
 void heapSort(int arr[], int n)
 {
     int i;
-    for (i= n / 2 - 1; i >= 0; i--)
+    for (i=(n/2)-1;i>=0;i--)
         heapify(arr, n, i);
 
-
+    int counter = 0;
     for (i=n-1; i>=0; i--){
-        int temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-        heapify(arr, i, 0);
+        counter++;
+        //int temp = arr[0];
+        //printf("arr[0] = %d  arr[%d] = %d\n",arr[0],i,arr[i]);
+        //arr[0] = arr[i];
+        //arr[i] = temp;
+        heapify(arr, i, i);
     }
+
+
 }
 
 
