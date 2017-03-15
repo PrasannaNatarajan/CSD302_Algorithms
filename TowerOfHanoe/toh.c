@@ -1,3 +1,6 @@
+/*
+This code was written after the python code in the same folder...
+*/
 #include <stdio.h>
 int count = 0;
 void toh(int n, char A,char B, char C){
