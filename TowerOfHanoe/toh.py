@@ -21,6 +21,10 @@ def toh(n,f,t,o):
 
 #the program driver
 #maybe make it a separate function
+
+#taking n as input from the user
 n = int(raw_input("Enter the height of the tower at source: "))
+
 toh(n,'A','B','C')
+
 print "Number of steps = ",c
