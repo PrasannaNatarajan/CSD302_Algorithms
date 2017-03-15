@@ -24,7 +24,7 @@ def toh(n,f,t,o):
 
 #taking n as input from the user
 n = int(raw_input("Enter the height of the tower at source: "))
-
+#calling the toh function
 toh(n,'A','B','C')
-
+#printing the number of recursions
 print "Number of steps = ",c
