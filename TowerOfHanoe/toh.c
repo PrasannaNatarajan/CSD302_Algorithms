@@ -2,7 +2,7 @@
 This code was written after the python code in the same folder...
 */
 #include <stdio.h>
-int count = 0;
+int count = 0; // to maintain counter for counting number of iterations
 void toh(int n, char A,char B, char C){
 	if (n == 1)
 	{
