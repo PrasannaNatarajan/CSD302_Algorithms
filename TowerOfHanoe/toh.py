@@ -11,10 +11,13 @@ def toh(n,f,t,o):
 		return
 	#recursive call
 	toh(n-1,f,o,t)
-	#printing the 
+	#printing the current disk status
 	print "move disk %d from %c to %c"%(n,f,t)
+	#incrementing the counter
 	c = c+1
+	#recursive call
 	toh(n-1,o,t,f)
+	#end of function
 
 #the program driver
 #maybe make it a separate function
