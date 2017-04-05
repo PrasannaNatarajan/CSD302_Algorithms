@@ -1,52 +1,69 @@
-/*
-Name    	:   Prasanna Natarajan
-Roll Number :   1410110298
-Inputs  	:   The number of items,capacity of the knapsack and price and weights of each items
-Outputs 	:   The maximum value that can be taken
-*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
+// function declarations
+void bubbleSort(int a[],int n);
+void radixSort(int a[], int n);
+void merge(int a[], int l, int m, int r);
+void join(int a[], int l, int r);
+void mergeSort(int a[], int l, int r);
+int main()
+{
+    int a[100000]; // input array
+    int i = 0;
+    srand(1);
+    for(i=0;i<100000;i++){
+        a[i]=(rand()%1000); // filling the input array with random numbers
+    }
 
-// #defines
+    clock_t begin1 = clock();
+    //bubbleSort(a,1000);
+    radixSort(a,100000); // calling radix sort with input array and size of the array
+    //mergeSort(a,0,5);
+    clock_t end1 = clock();
+    double time_spent = (double)(end1-begin1)/CLOCKS_PER_SEC;
+    printf("Time for execution of radix sort = %lf\n",time_spent);
 
-//global variables
+    clock_t begin2 = clock();
+    bubbleSort(a,999999); // calling bubble sort with input array and size of the array
+    //radixSort(a,1000);
+    //mergeSort(a,0,5);
+    clock_t end2 = clock();
+    double time_spent2 = (double)(end2-begin2)/CLOCKS_PER_SEC;
+    printf("Time for execution of bubble sort = %lf\n",time_spent2);
 
-//function declarations
+    clock_t begin3 = clock();
+    //radixSort(a,1000);
+    mergeSort(a,0,999999);// calling merge sort with input array, left most element's index and right most element's index+1
+    clock_t end3 = clock();
+    double time_spent3 = (double)(end3-begin3)/CLOCKS_PER_SEC;
 
-int main(){
-
-
-    //random
-    time_t t;
-    srand((unsigned)time(&t));
-    //rand() to get random numbers
-    clock_t begin = clock();
-    // code that should be timed...
-    clock_t end = clock();
-    double time_spent = (double)(end-begin)/CLOCKS_PER_SEC;
-    printf("Time for execution of %dth input = %lf\n",i,time_spent);
-
-	return 0;
+    printf("Time for execution of merge sort = %lf\n",time_spent3);
+    return 0;
 }
-
-// bubbleSort :: ascending order
+// bubbleSort
 // inputs : array to be sorted
 //          size of the array
 void bubbleSort(int a[],int n){
     int i,j,temp;
     for(i=0;i<n-1;i++){
+
         for(j=0;j<n-i-1;j++){
             if(a[j] >= a[j+1]){
                 temp = a[j];
                 a[j] = a[j+1];
                 a[j+1] = temp;
             }
+
         }
     }
-}
 
+    /*for(i=0;i<n;i++)
+        printf("%d ",a[i]); // printing the values of sorted array for debuging
+    printf("\n");*/
+}
 // radixSort
 // inputs : array to be sorted
 //          size of the array
@@ -87,13 +104,17 @@ void radixSort(int a[], int n){
         }
         counter = 0;
         for(i=0;i<10;i++){
-            for(k=0;k<999999;k++){
-                space[i][k] = -1;
-            }
+        for(k=0;k<999999;k++){
+            space[i][k] = -1;
         }
     }
-}
+    }
 
+    /*for(i=0;i<n;i++){
+       printf("%d ",a[i]); // printing for debugging
+    }
+    printf("\n");*/
+}
 // merge function: to sort the elements in the right order
 void merge(int a[], int l, int m, int r){
     int i,j,k;
@@ -156,7 +177,3 @@ void mergeSort(int a[], int l, int r){
 
     printf("\n");*/
 }
-
-
-
-

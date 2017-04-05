@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1485343636 source:c:\users\prasanna\documents\studies\semester 6\algorithms\labs\lab3\lab3\main.c
-	<stdio.h>
-	<stdlib.h>
-	<time.h>
-	<math.h>
-
