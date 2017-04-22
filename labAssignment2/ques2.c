@@ -24,12 +24,20 @@ void dijkstra_shortest_path(int startNode);
 int main(){
     time_t t;
     srand((unsigned)time(&t));
+
+    //initialise the graph
     initGraph();
+
+    //print the graph
     printGraph();
+
+    //function call for dijkstra_shortest_path with a random source node
     dijkstra_shortest_path(rand()%N);
+
     return 0;
 }
 
+//function to initialise the graph
 void initGraph(){
     time_t t;
     srand((unsigned)time(&t));
