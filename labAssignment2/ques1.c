@@ -14,6 +14,7 @@ Outputs 	:   The values properly inserted and deleted
 //defining global variables
 typedef struct node{
     int data;
+    int leftSize;
     struct node *left;
     struct node *right;
 }node_t;
@@ -28,19 +29,20 @@ node_t* insert(node_t *root,int data);
 node_t *delete(node_t *root,int data);
 int findSmallest(node_t *root,int k);
 void traverse(node_t *root, int k);
-
+node_t* insert_data(node_t *root,int data);
+node_t *delete_data(node_t *root,int data);
 int main(){
 
     node_t* root = NULL;
 
     //testing insertion
-    root = insert(root,10);
-    root = insert(root,5);
-    root = insert(root,4);
-    root = insert(root,4);
-    root = insert(root,6);
-    root = insert(root,12);
-    root = insert(root,15);
+    root = insert(root,10); //printTree(root);
+    root = insert(root,5);  //printTree(root);
+    root = insert(root,4);  //printTree(root);
+    root = insert(root,4);  //printTree(root);
+    root = insert(root,6);  //printTree(root);
+    root = insert(root,12); //printTree(root);
+    root = insert(root,15); //printTree(root);
 
     //printing the tree
     printTree(root);
@@ -55,10 +57,34 @@ int main(){
 
     //testing find_smallest
     int k = 5;
-    printf("min = %d",findSmallest(root,k));
+    printf("min = %d\n",findSmallest(root,k));
     return 0;
 }
 
+int findSmallest(node_t *root, int k)
+{
+    int ret = -1;
+    if( root!=NULL ){
+        node_t *temp = root; // a pointer to iterate
+        while(temp!=NULL)    // go till k
+        {
+            if( (temp->leftSize + 1) == k ){
+                ret = temp->data;
+                break;
+            }
+            else if( k > temp->leftSize ){ // number of nodes are less in the left sub tree
+                k = k - (temp->leftSize + 1);
+                temp = temp->right;         // traverse to right subtree
+            }
+            else{
+                temp = temp->left;      //traverse to left sub tree
+            }
+        }
+    }
+
+    return ret;
+}
+/*
 //function to find the kth smallest element
 int findSmallest(node_t *root, int k) {
     traverse(root,k);
@@ -73,7 +99,7 @@ void traverse(node_t *root,int k){
     if(count == k)result = root->data;
     traverse(root->right,k);
 }
-
+*/
 //function to create node
 node_t *createNode(int data){
     node_t *n;
@@ -85,6 +111,7 @@ node_t *createNode(int data){
     }
 
     n->data = data;
+    n->leftSize = 0;
     n->left = NULL;
     n->right = NULL;
 
@@ -97,29 +124,65 @@ void printTree(node_t *root){
         return;
     // inorder print
     printTree(root->left);
-    printf(" %d",root->data);
+    printf("%d ",root->data);
     printTree(root->right);
 }
-
-
-//function to insert node given a data value, doesn't insert when the data value is already present in the tree.
-node_t* insert(node_t *root,int data){
-    if(root == NULL){
-        root = createNode(data);
-        return root;
+// function to search for the given key in the tree
+node_t* search(node_t* n , int key) {
+    if(n==NULL){
+        return NULL;
     }
-    if(root->data == data)
-        printf("Data (%d) already present, Not inserting\n",data);
-    else if(root->data > data){
-        root->left = insert(root->left,data);
-    }else{
-        root->right = insert(root->right,data);
+    else if(key == n->data){
+        //printf("found !");
+        return n;
+    }
+    else if(key<n->data){
+        return search(n->left,key);
+    }
+    else{
+        return search(n->right,key);
+    }
+}
+// wrapper function for insertion
+node_t* insert(node_t* root , int data) {
+    node_t* ret = search(root , data);
+    if(ret == NULL){
+        return insert_data(root , data);
     }
     return root;
 }
 
+//function to insert node given a data value, doesn't insert when the data value is already present in the tree.
+node_t* insert_data(node_t *root,int data){
+    if(root == NULL){
+        root = createNode(data);
+        return root;
+    }
+    if(root->data == data) {
+        printf("Data (%d) already present, Not inserting\n",data);
+        //return NULL;
+    }
+    else if(root->data > data){
+
+        root->left = insert_data(root->left,data);
+        root->leftSize++;
+
+
+    }else{
+        root->right = insert_data(root->right,data);
+    }
+    return root;
+}
+// wrapper function for deletion
+node_t* delete(node_t* root , int data) {
+    node_t* ret = search(root , data);
+    if(ret != NULL){
+        return delete_data(root , data);
+    }
+    return root;
+}
 //find and delete a particular data and maintain the BST property
-node_t *delete(node_t *root,int data){
+node_t *delete_data(node_t *root,int data){
     node_t *temp;   //for holding some child branch of a tree temporarily
     node_t *rep;    //for holding the replace node
     int rep_data;   //for holding the replace value
@@ -129,6 +192,7 @@ node_t *delete(node_t *root,int data){
     //search for the position of data to be deleted
     if(data < root->data){
         root->left = delete(root->left,data);   //recursively call the function to delete the left branch
+        root->leftSize -=1;
     }else if(data > root->data){
         root->right = delete(root->right,data); //recursively call the function to delete the right branch
     }else{
